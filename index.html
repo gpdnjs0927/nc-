@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨다이노스 파이팅! - 단디와 함께하는 야구 세상</title>
+    <style>
+        :root {
+            --nc-blue: #0c2340;
+            --nc-gold: #c7a76c;
+            --nc-light-blue: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --light-text: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* 히어로 섹션 */
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--nc-blue), #1e3a8a);
+            color: white;
+            padding: 50px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(12, 35, 64, 0.2);
+            border-bottom: 5px solid var(--nc-gold);
+        }
+
+        /* 로고 스타일 */
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .team-logo {
+            width: 90px;
+            height: 90px;
+            background-color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 3px solid var(--nc-gold);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--nc-blue);
+            letter-spacing: -2px;
+        }
+
+        .dandi-badge {
+            display: inline-block;
+            background-color: var(--nc-gold);
+            color: var(--nc-blue);
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.6rem;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+        }
+
+        /* 카드 레이아웃 */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-left: 6px solid var(--nc-blue);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .card.gold-border {
+            border-left-color: var(--nc-gold);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--nc-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        p, li {
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+        /* 이미지 스타일 */
+        .content-img {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 20px 0 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 역사 타임라인 */
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .history-box {
+            background: #f1f5f9;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .history-box .year {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--nc-light-blue);
+            margin-bottom: 8px;
+        }
+
+        .history-box .desc {
+            font-size: 1.05rem;
+            color: var(--text-color);
+        }
+
+        /* 인터랙티브 버튼 스타일 */
+        .action-btn {
+            background-color: var(--nc-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .action-btn:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.gold {
+            background-color: var(--nc-gold);
+            color: var(--nc-blue);
+        }
+        .action-btn.gold:hover {
+            background-color: #b5955b;
+        }
+
+        /* 펼치기 내용 박스 */
+        .expandable-content {
+            display: none;
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 응원 메시지 생성기 박스 */
+        .generator-box {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--nc-blue);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 체크리스트 스타일 */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 1.15rem;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .checklist-item:hover {
+            background-color: #f1f5f9;
+            border-color: var(--nc-light-blue);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--nc-gold);
+            cursor: pointer;
+        }
+
+        .checklist-item.checked {
+            text-decoration: line-through;
+            color: var(--light-text);
+            background-color: #e2e8f0;
+            border-color: #cbd5e1;
+        }
+
+        /* 퀴즈 스타일 */
+        .quiz-question {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--nc-blue);
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-btn {
+            background-color: #f8fafc;
+            border: 2px solid #cbd5e1;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .quiz-btn:hover {
+            background-color: #f1f5f9;
+            border-color: var(--nc-blue);
+        }
+
+        .quiz-btn.correct {
+            background-color: #dcfce7;
+            border-color: #16a34a;
+            color: #166534;
+            font-weight: bold;
+        }
+
+        .quiz-btn.incorrect {
+            background-color: #fee2e2;
+            border-color: #dc2626;
+            color: #991b1b;
+        }
+
+        .quiz-result {
+            margin-top: 15px;
+            font-size: 1.15rem;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--light-text);
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 헤더 섹션 (로고 추가) -->
+        <header>
+            <div class="logo-container">
+                <div class="team-logo">NC</div>
+            </div>
+            <div class="dandi-badge">🦖 엔씨다이노스 마스코트 단디와 함께!</div>
+            <h1>⚾ 엔씨다이노스 파이팅!</h1>
+            <p>당당하고 멋진 다이노스의 매력 속으로 빠져보세요!</p>
+        </header>
+
+        <!-- 마스코트 단디 이미지 및 소개 -->
+        <div class="card">
+            <h2>🦖 마스코트 '단디'와 함께하는 응원</h2>
+            <p>엔씨다이노스의 자랑스러운 마스코트 단디는 늘 밝은 미소로 선수들과 팬들에게 무한한 에너지를 전달합니다.</p>
+            <img src="object:image{watermarked_img_7535787094263246749.png}" alt="단디 마스코트" class="content-img">[cite: 1]
+            <button class="action-btn" onclick="toggleExpand('dandiMore')">👉 단디 소개 더보기</button>
+            <div id="dandiMore" class="expandable-content">
+                <p><strong>단디</strong>는 경상도 사투리로 '단단히 하라'는 뜻에서 유래되었습니다. 언제나 든든하게 팀의 승리를 지지하며, 귀여운 외모와 화려한 퍼포먼스로 관중석의 분위기를 최고조로 이끌어냅니다!</p>
+            </div>
+        </div>
+
+        <!-- 엔씨다이노스 역사 (창단 & 우승) -->
+        <div class="card gold-border">
+            <h2>📜 엔씨다이노스의 발자취 (창단 & 우승 기록)</h2>
+            <p>철저한 데이터 야구와 과감한 투자로 한국 프로야구의 패러다임을 바꾼 명문 구단입니다.</p>
+            <img src="object:image{watermarked_img_5643861393176070693.png}" alt="우승 트로피" class="content-img">[cite: 2]
+            
+            <div class="history-grid">
+                <div class="history-box">
+                    <div class="year">📅 2011년 3월</div>
+                    <div class="desc"><strong>창원 연고지 구단 창단</strong><br>2013년 1군 진입 이후 눈부신 성장을 거듭했습니다.</div>
+                </div>
+                <div class="history-box">
+                    <div class="year">🏆 2020년 11월</div>
+                    <div class="desc"><strong>창단 첫 통합 우승 (V1)</strong><br>정규리그 1위와 한국시리즈 우승을 동시에 달성했습니다!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 왜 강팀인가 & 구장 소개 -->
+        <div class="card">
+            <h2>💪 엔씨는 왜 강팀인가?</h2>
+            <p>체계적인 선수 육성 시스템과 과학적인 데이터 분석 능력이 엔씨다이노스를 강팀으로 만드는 원동력입니다.</p>
+            <img src="object:image{watermarked_img_9410747021181475345.png}" alt="창원NC파크" class="content-img">[cite: 3]
+            <ul>
+                <li><strong>스마트 데이터 야구:</strong> 철저한 분석을 바탕으로 최적의 전술을 구사합니다.</li>
+                <li><strong>최고의 홈구장 창원NC파크:</strong> 탁 트인 시야와 최고의 관람 환경을 자랑하는 야구의 성지입니다.</li>
+                <li><strong>흔들리지 않는 저력:</strong> 경기 후반까지 집중력을 잃지 않고 상대를 압박하는 저력을 가졌습니다.</li>
+            </ul>
+        </div>
+
+        <!-- 매력 있는 팀인 이유 -->
+        <div class="card gold-border">
+            <h2>✨ 엔씨가 매력 있는 팀인 이유</h2>
+            <p><strong>엔씨가 매력있는 팀인 이유를 꼭 넣어줘</strong></p>
+            <img src="object:image{watermarked_img_17862062882212107607.png}" alt="선수단 세레머니" class="content-img">[cite: 4]
+            <ul>
+                <li><strong>팬들과의 뜨거운 소통:</strong> 언제나 팬들의 목소리에 귀 기울이며 따뜻한 정을 나누는 구단입니다.</li>
+                <li><strong>신바람 나는 응원가:</strong> 창원NC파크를 가득 채우는 신나는 응원 문화가 일품입니다.</li>
+                <li><strong>포기하지 않는 열정:</strong> 그라운드 위에서 온 힘을 다해 뛰는 선수들의 모습에 진정한 감동을 느낄 수 있습니다.</li>
+            </ul>
+        </div>
+
+        <!-- 응원 메시지 생성기 버튼 기능 -->
+        <div class="card">
+            <h2>🎉 오늘의 응원 메시지 뽑기</h2>
+            <p>버튼을 누르면 오늘의 승리를 기원하는 랜덤 응원 메시지가 나타납니다!</p>
+            <button class="action-btn gold" onclick="generateCheer()">✨ 응원 메시지 생성하기</button>
+            <div id="cheerResult" class="generator-box">버튼을 눌러 응원 메시지를 확인해 보세요!</div>
+        </div>
+
+        <!-- 체크리스트 기능 -->
+        <div class="card">
+            <h2>☑️ 엔씨다이노스 팬 체크리스트</h2>
+            <p>해당하는 항목을 체크하며 나의 팬력을 확인해 보세요!</p>
+            
+            <label class="checklist-item">
+                <input type="checkbox" onchange="toggleCheck(this)"> 2020년 통합 우승(V1)의 순간을 생생하게 기억한다
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="toggleCheck(this)"> 창원NC파크에서 맛있는 간식을 먹으며 직관을 즐겨봤다
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="toggleCheck(this)"> 응원가에 맞춰 "엔씨 다이노스!"를 큰 목소리로 외친다
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="toggleCheck(this)"> 마스코트 단디와 쎄리의 귀여운 매력에 푹 빠져있다
+            </label>
+        </div>
+
+        <!-- 퀴즈 기능 -->
+        <div class="card">
+            <h2>❓ 엔씨다이노스 상식 퀴즈</h2>
+            <div class="quiz-question">Q. 엔씨다이노스가 창단 첫 통합 우승(V1)을 달성한 연도는 언제일까요?</div>
+            <div class="quiz-options">
+                <button class="quiz-btn" onclick="checkAnswer(this, false)">1. 2013년</button>
+                <button class="quiz-btn" onclick="checkAnswer(this, true)">2. 2020년</button>
+                <button class="quiz-btn" onclick="checkAnswer(this, false)">3. 2023년</button>
+            </div>
+            <div id="quizResult" class="quiz-result"></div>
+        </div>
+
+        <footer>
+            <p>🦖 단디와 함께 언제나 승리를 향해 질주하는 엔씨다이노스 파이팅! ⚾</p>
+        </footer>
+    </div>
+
+    <script>
+        // 펼치기/접기 기능
+        function toggleExpand(id) {
+            const content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+
+        // 응원 메시지 랜덤 생성 기능
+        const cheerMessages = [
+            "💪 V3를 향하여! 오늘도 시원한 홈런을 기대합니다!",
+            "🔥 창원NC파크를 함성으로 물들일 시간! 엔씨 파이팅!",
+            "⚾ 끝날 때까지 끝난 게 아니다! 저력의 다이노스 승리!",
+            "💙 언제나 함께 달리는 다이노스 팬들이 있어 든든합니다!",
+            "🏆 가자 우승을 향해! 다이노스의 거침없는 질주!"
+        ];
+
+        function generateCheer() {
+            const randomIndex = Math.floor(Math.random() * cheerMessages.length);
+            const box = document.getElementById('cheerResult');
+            box.innerText = cheerMessages[randomIndex];
+        }
+
+        // 체크리스트 인터랙션
+        function toggleCheck(checkbox) {
+            const item = checkbox.parentElement;
+            if (checkbox.checked) {
+                item.classList.add('checked');
+            } else {
+                item.classList.remove('checked');
+            }
+        }
+
+        // 퀴즈 인터랙션
+        function checkAnswer(button, isCorrect) {
+            const parent = button.parentElement;
+            const buttons = parent.getElementsByClassName('quiz-btn');
+            const resultDiv = document.getElementById('quizResult');
+
+            for (let btn of buttons) {
+                btn.style.pointerEvents = 'none';
+                if (btn === button) {
+                    btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+                } else if (isCorrect === false && btn.getAttribute('onclick').includes('true')) {
+                    btn.classList.add('correct');
+                }
+            }
+
+            resultDiv.style.display = 'block';
+            if (isCorrect) {
+                resultDiv.style.backgroundColor = '#dcfce7';
+                resultDiv.style.color = '#166534';
+                resultDiv.innerText = '🎉 정답입니다! 2020년은 영광스러운 V1 통합 우승의 해였습니다!';
+            } else {
+                resultDiv.style.backgroundColor = '#fee2e2';
+                resultDiv.style.color = '#991b1b';
+                resultDiv.innerText = '😢 아쉽네요! 정답은 2번 2020년입니다.';
+            }
+        }
+    </script>
+</body>
+</html>
